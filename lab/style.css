@@ -1,0 +1,395 @@
+@font-face {
+  font-family:Manrope;
+  src:url('Manrope.ttf') format('truetype');
+  font-display:swap
+}
+* {
+  box-sizing:border-box
+}
+:root {
+  color-scheme:dark;
+  --bg:#0a1318;
+  --panel:#0f1d21;
+  --line:#29403f;
+  --ink:#e6f1ea;
+  --muted:#91a9a5;
+  --green:#82dab9
+}
+body {
+  margin:0;
+  background:radial-gradient(ellipse at 75% 0%,#152d2d 0,transparent 38%),var(--bg);
+  color:var(--ink);
+  font-family:Manrope,system-ui,sans-serif;
+  font-size:15px
+}
+.shell {
+  max-width:1320px;
+  margin:auto;
+  padding:0 54px
+}
+.masthead,footer {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:30px 0;
+  border-bottom:1px solid var(--line)
+}
+a {
+  color:inherit;
+  text-decoration:none
+}
+a:hover {
+  color:var(--green)
+}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible {
+  outline:2px solid var(--green);
+  outline-offset:4px
+}
+.brand,.source,footer,.eyebrow,.rule span,.rule small,.control-group label,.readouts span,.chart-top,.chart-footer,.stage-label {
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.13em
+}
+.brand {
+  color:var(--green)
+}
+.brand span,.muted {
+  color:#57736e
+}
+.source,footer {
+  color:var(--muted)
+}
+.intro {
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  padding:88px 0 60px
+}
+.eyebrow {
+  color:var(--green);
+  margin:0 0 20px
+}
+.dot {
+  display:inline-block;
+  background:var(--green);
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  margin-right:8px
+}
+h1,h2,p {
+  margin:0
+}
+h1 {
+  font-size:clamp(52px,6vw,82px);
+  letter-spacing:-.065em;
+  line-height:1.05;
+  font-weight:650
+}
+h1 em,h2 em {
+  font-style:normal;
+  color:var(--green)
+}
+.lede {
+  color:var(--muted);
+  font-size:17px;
+  line-height:1.7;
+  margin-top:24px
+}
+.rule {
+  border-left:1px solid var(--line);
+  padding-left:25px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-width:185px
+}
+.rule span,.rule small {
+  color:var(--muted);
+  font-size:10px
+}
+.rule strong {
+  font-size:27px;
+  letter-spacing:-.04em
+}
+.instrument,.chart-panel {
+  background:linear-gradient(140deg,#112126,#0d191d);
+  border:1px solid var(--line);
+  border-radius:14px
+}
+.instrument {
+  padding:30px
+}
+.instrument-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+.instrument-header .eyebrow {
+  margin-bottom:10px
+}
+.instrument h2,.analysis h2 {
+  font-size:29px;
+  letter-spacing:-.04em
+}
+.accent {
+  color:var(--green)
+}
+.status {
+  color:var(--green);
+  border:1px solid #365d50;
+  border-radius:50px;
+  padding:8px 13px;
+  font-size:10px;
+  letter-spacing:.12em;
+  font-weight:700
+}
+.controls {
+  display:flex;
+  align-items:end;
+  gap:22px;
+  margin:32px 0 24px
+}
+.control-group {
+  display:flex;
+  flex-direction:column;
+  gap:9px
+}
+.control-group label {
+  color:var(--muted)
+}
+select,button {
+  font:600 13px Manrope,system-ui;
+  color:var(--ink);
+  background:#14272a;
+  border:1px solid #36514d;
+  border-radius:6px;
+  height:42px;
+  padding:0 15px
+}
+select {
+  min-width:200px;
+  cursor:pointer
+}
+.buttons {
+  display:flex;
+  gap:8px
+}
+button {
+  cursor:pointer
+}
+button:hover,select:hover {
+  border-color:var(--green)
+}
+button.primary {
+  color:#10201c;
+  background:var(--green);
+  border-color:var(--green);
+  min-width:104px
+}
+button:disabled {
+  opacity:.5;
+  cursor:not-allowed
+}
+.speed {
+  margin-left:auto;
+  min-width:155px
+}
+.speed label {
+  display:flex;
+  justify-content:space-between
+}
+.speed label span {
+  color:var(--green)
+}
+input[type=range] {
+  width:100%;
+  height:42px;
+  accent-color:var(--green);
+  cursor:pointer
+}
+.stage {
+  position:relative;
+  background:#0a161a;
+  border:1px solid #223b3c;
+  border-radius:8px;
+  overflow:hidden
+}
+.stage canvas {
+  display:block;
+  width:100%;
+  height:340px
+}
+.stage-label {
+  position:absolute;
+  left:18px;
+  bottom:14px;
+  color:#6c8b83;
+  font-size:10px;
+  pointer-events:none
+}
+.readouts {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  padding:25px 0 0
+}
+.readouts>div {
+  display:flex;
+  flex-direction:column;
+  gap:7px
+}
+.readouts span {
+  color:var(--muted)
+}
+.readouts strong {
+  font-size:27px;
+  letter-spacing:-.035em
+}
+.readouts strong.state {
+  font-size:16px;
+  color:var(--green);
+  padding-top:7px
+}
+.analysis {
+  display:grid;
+  grid-template-columns:1fr 1.35fr;
+  gap:70px;
+  align-items:center;
+  padding:100px 0 45px
+}
+.analysis h2 {
+  font-size:42px;
+  line-height:1.15
+}
+.analysis-copy p:not(.eyebrow) {
+  color:var(--muted);
+  line-height:1.8;
+  max-width:360px;
+  margin:20px 0
+}
+.analysis-copy a {
+  font-size:13px;
+  font-weight:700;
+  color:var(--green)
+}
+.chart-panel {
+  padding:24px
+}
+.chart-top,.chart-footer {
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted)
+}
+.chart-top span:first-child {
+  color:var(--green)
+}
+#chart {
+  display:block;
+  width:100%;
+  height:210px;
+  margin:15px 0
+}
+.chart-footer {
+  font-size:10px
+}
+.note {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+  margin-bottom:60px
+}
+footer {
+  border-top:1px solid var(--line);
+  border-bottom:0;
+  font-size:10px;
+  padding:24px 0 34px
+}
+@media(max-width:760px) {
+  h1 {
+    font-size:clamp(38px,10vw,52px)
+  }
+  .shell {
+    padding:0 20px
+  }
+  .masthead {
+    padding:23px 0
+  }
+  .source {
+    display:none
+  }
+  .intro {
+    padding:56px 0 38px;
+    align-items:start
+  }
+  .rule {
+    display:none
+  }
+  .lede br {
+    display:none
+  }
+  .instrument {
+    padding:20px
+  }
+  .instrument-header {
+    align-items:start
+  }
+  .instrument h2 {
+    font-size:24px
+  }
+  .controls {
+    flex-wrap:wrap;
+    gap:16px;
+    margin:25px 0
+  }
+  .control-group {
+    width:100%
+  }
+  select {
+    width:100%
+  }
+  .buttons {
+    width:100%
+  }
+  .buttons button {
+    flex:1;
+    min-width:0;
+    padding:0 5px;
+    white-space:nowrap;
+    font-size:12px
+  }
+  .speed {
+    margin:0
+  }
+  .stage canvas {
+    height:250px
+  }
+  .stage-label {
+    font-size:8px
+  }
+  .readouts {
+    grid-template-columns:repeat(2,1fr);
+    gap:22px
+  }
+  .readouts strong {
+    font-size:24px
+  }
+  .analysis {
+    grid-template-columns:1fr;
+    gap:28px;
+    padding:65px 0 30px
+  }
+  .analysis h2 {
+    font-size:36px
+  }
+  #chart {
+    height:180px
+  }
+  .note {
+    margin-bottom:40px
+  }
+  footer {
+    gap:20px;
+    line-height:1.6
+  }
+}

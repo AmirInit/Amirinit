@@ -1,7 +1,9 @@
 """Read only GitHub's publicly visible calendar, without credentials."""
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from html.parser import HTMLParser
 from urllib.request import Request, urlopen
+from urllib.error import URLError
+from time import sleep
 import re
 
 
@@ -52,8 +54,21 @@ def parse_calendar(html):
 
 def fetch_calendar():
     request = Request('https://github.com/users/AmirInit/contributions', headers={'User-Agent': 'AmirInit-Life-Observatory/1.0', 'Accept-Language': 'en-US,en;q=0.9'})
-    with urlopen(request, timeout=30) as response:
-        return parse_calendar(response.read(2_000_000).decode('utf-8'))
+    for attempt in range(3):
+        try:
+            with urlopen(request, timeout=30) as response:
+                payload = response.read(2_000_001)
+            if len(payload) > 2_000_000:
+                raise ValueError('calendar response exceeds size limit')
+            days = parse_calendar(payload.decode('utf-8'))
+            today = datetime.now(timezone.utc).date()
+            if not today - timedelta(days=2) <= days[-1][0] <= today + timedelta(days=1):
+                raise ValueError('calendar response is stale or future-dated')
+            return days
+        except (URLError, TimeoutError):
+            if attempt == 2:
+                raise
+            sleep(attempt + 1)
 
 
 def seed(days):
