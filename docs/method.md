@@ -25,7 +25,7 @@ node --test tests/lab.test.mjs
 python3 -m http.server 8765 --directory lab
 ```
 
-Open `http://localhost:8765/` for the local lab. The generator renders and verifies both desktop and mobile GIFs and their static PNGs in a temporary directory before replacing the published files and public snapshot. Each GIF is limited to 5 MB. The README uses a GitHub-supported `<picture>` source for narrow displays and retains a desktop fallback; the PNGs provide static alternatives. GIFs work without README JavaScript and may be cached by GitHub.
+Open `http://localhost:8765/` for the local lab. The generator renders and verifies both desktop and mobile GIFs and their static PNGs in a temporary directory before replacing the published files and public snapshot. Each GIF uses a shared episode-wide palette for compact, stable frame deltas and is limited to 5 MB. The README uses a GitHub-supported `<picture>` source for narrow displays and retains a desktop fallback; the PNGs provide static alternatives. GIFs work without README JavaScript and may be cached by GitHub.
 
 The daily and manually dispatched refresh workflow runs only on `main`, uses contents-only write permission, serializes refreshes, and commits only changed assets and the snapshot. A failed fetch, validation, rendering, or non-fast-forward push leaves the last committed output intact. The separate Pages workflow deploys only the `lab/` directory to this repository's project site; it does not modify the personal website repository. Changes made by the refresh workflow's `GITHUB_TOKEN` do not trigger another Pages build, so the lab reads the current public snapshot from `main` with the bundled fallback described above. Scheduled Actions can be delayed by GitHub.
 

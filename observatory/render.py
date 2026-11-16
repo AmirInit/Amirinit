@@ -122,7 +122,16 @@ def render(days, initial, output, generations=25, subdivisions=4):
             frames.append(draw_frame(days, initial, states[-1], states[0], len(states)-1, part/4, bounds, mobile, True))
             durations.append(100)
         frames[0].save(output / f'observatory{suffix}.png', optimize=True)
-        frames[0].save(output / f'observatory{suffix}.gif', save_all=True, append_images=frames[1:],
-                       duration=durations, loop=0, optimize=True, disposal=1)
+        # One palette for the entire episode keeps unchanged antialiased text
+        # and background pixels identical between frames, improving GIF deltas.
+        thumb = (frames[0].width // 2, frames[0].height // 2)
+        atlas = Image.new('RGB', (thumb[0] * 8, thumb[1]))
+        for index in range(8):
+            sample = frames[round(index * (len(frames) - 1) / 7)]
+            atlas.paste(sample.resize(thumb, Image.Resampling.NEAREST), (index * thumb[0], 0))
+        palette = atlas.quantize(colors=192, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+        encoded = [frame.quantize(palette=palette, dither=Image.Dither.NONE) for frame in frames]
+        encoded[0].save(output / f'observatory{suffix}.gif', save_all=True, append_images=encoded[1:],
+                        duration=durations, loop=0, optimize=True, disposal=1)
         if (output / f'observatory{suffix}.gif').stat().st_size > 5_000_000:
             raise ValueError('animation exceeds 5 MB limit')
